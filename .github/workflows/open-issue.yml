@@ -1,0 +1,22 @@
+name: Open issue manually
+
+on:
+  workflow_dispatch   # 👈 manual trigger
+
+jobs:
+  open-issue:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      issues: write   # 👈 required to create issues
+
+    steps:
+      - name: Create issue using GitHub CLI
+        run: |
+          gh issue create \
+            --repo ${{ github.repository }} \
+            --title "Manual issue from GitHub Actions" \
+            --body "This issue was created using GITHUB_TOKEN by a workflow."
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
